@@ -1,7 +1,7 @@
 # 📧 Clasificador de Emails con IA
 
-Este proyecto es un **clasificador inteligente de correos electrónicos** construido en **Python + Hugging Face + Gradio**.  
-El sistema analiza el texto de un email y lo clasifica en una de las siguientes categorías:
+Este proyecto es una herramienta inteligente de clasificación de correos electrónicos desarrollada con Python, Hugging Face y Gradio. 
+Analiza el texto del correo electrónico y lo clasifica en una de las siguientes categorías, además de proporcionar detección de tono y un resumen automático:
 
 - 🟥 **Urgente** (requiere atención inmediata)  
 - 🟨 **Importante pero no urgente**  
@@ -11,37 +11,30 @@ El sistema analiza el texto de un email y lo clasifica en una de las siguientes 
 ---
 
 ## 🚀 Tecnologías utilizadas
-- [Transformers (Hugging Face)](https://huggingface.co/transformers/) → modelo base `distilbert-base-uncased-finetuned-sst-2-english`  
-- [Gradio](https://gradio.app/) → interfaz web interactiva  
-- [scikit-learn](https://scikit-learn.org/) → soporte para reglas y posible entrenamiento futuro  
+- Transformers (Hugging Face) → modelos:
 
+- distilbert-base-uncased-finetuned-sst-2-english (clasificación de texto)
+
+- Proceso de resumen (resumen automático)
+
+- Proceso de análisis de sentimientos (detección de tono)
+
+- Gradio → interfaz web interactiva con salida de tarjetas visuales
+
+- scikit-learn → opcional, para preprocesamiento o entrenamiento futuro
 ---
-
-## ⚙️ Instalación
-
-Clona el repositorio e instala las dependencias:
-
-git clone https://github.com/Kevin-2099/email-classifier-ai.git
-
-cd email-classifier-ai
-
-pip install -r requirements.txt
-
-Ejecuta la aplicación:
-
-python app.py
-
-Esto abrirá una interfaz web local con Gradio en http://127.0.0.1:7860/.
-
 ## 🧠 Cómo funciona
-1. Reglas basadas en palabras clave
+1. Clasificación basada en reglas
+- El sistema busca palabras clave típicas de cada categoría (p. ej., "urgente", "inmediato", "oferta", "recordatorio"). Las reglas de contexto y la detección de negación ayudan a reducir los falsos positivos.
 
-. El sistema busca keywords típicas de cada categoría (ej. “urgente”, “inmediato”, “oferta”, “recordatorio”).
+2. Fallback al modelo de cara abrazada
+- Si no se encuentran palabras clave claras, el modelo DistilBERT predice la categoría basándose en el contenido del correo electrónico. Esto garantiza que el sistema siempre proporcione una clasificación adecuada.
 
-. Se aplican reglas de contexto y detección de negaciones para reducir falsos positivos.
+3. Detección de tonos
+- El sistema analiza el sentimiento del correo electrónico (positivo, negativo, neutral) para proporcionar un indicador de tono adicional.
 
-2. Fallback con modelo de Hugging Face
+4. Resumen automático
+- Se genera automáticamente un breve resumen del contenido del correo electrónico mediante el proceso de resumen.
 
-. Si no encuentra coincidencias claras, usa distilBERT fine-tuned en clasificación de texto.
-
-. Según el sentimiento detectado, asigna la categoría más probable.
+5. Salida de tarjeta visual
+- Los resultados se muestran en una única tarjeta visual con categoría, tono, resumen y explicación, por lo que todo es fácil de leer sin necesidad de desplazarse.
